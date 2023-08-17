@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: kubmanager-web-publish
+name: kubemanager-web-publish
 
 environment:
   GOOS: linux
@@ -20,8 +20,8 @@ steps:
       username: admin
       password:
         from_secret: harbor_password
-      repo: harbor.kubmanager.com/kubmanager/kubmanager-web
-      registry: harbor.kubmanager.com
+      repo: harbor.kubemanager.com/kubemanager/kubemanager-web
+      registry: harbor.kubemanager.com
       tags:
         - v1.4
   - name: ssh commands
@@ -34,10 +34,10 @@ steps:
       port: 22
       script:
         #拉取镜像并重启 注意--需要提前在目标主机完成docker login
-        - if [ $(docker ps -a | grep kubmanager-web | wc -l) -ge 1 ];then docker stop kubmanager-web && docker rm kubmanager-web; fi
-        - docker pull harbor.kubmanager.com/kubmanager/kubmanager-web:v1.4
+        - if [ $(docker ps -a | grep kubemanager-web | wc -l) -ge 1 ];then docker stop kubemanager-web && docker rm kubemanager-web; fi
+        - docker pull harbor.kubemanager.com/kubemanager/kubemanager-web:v1.4
         - export BACKEND_HOST=http://192.168.1.19:8082/
-        - docker run --name kubmanager-web --restart=always -d -p8081:80 -e BACKEND_HOST=$BACKEND_HOST harbor.kubmanager.com/kubmanager/kubmanager-web:v1.4
+        - docker run --name kubemanager-web --restart=always -d -p8081:80 -e BACKEND_HOST=$BACKEND_HOST harbor.kubemanager.com/kubemanager/kubemanager-web:v1.4
 volumes:
   - name: hosts
     host:
