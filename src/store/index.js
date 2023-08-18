@@ -25,6 +25,7 @@ import sa from './modules/sa'
 import role from './modules/role'
 import rb from './modules/rb'
 import harbor from './modules/harbor'
+import metrics from './modules/metrics'
 
 Vue.use(Vuex)
 
@@ -53,7 +54,8 @@ const store = new Vuex.Store({
     statefulset,
     job,
     cronjob,
-    harbor
+    harbor,
+    metrics
   },
   getters
 })
